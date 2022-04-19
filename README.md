@@ -15,3 +15,7 @@ Focus on essential features — CRUD operations — as well as persisting data �
 ### text_input
 
 > design the widget tree for the input area
+
+### custom_dialog
+
+> prompt text input with a dialog and through the fab
