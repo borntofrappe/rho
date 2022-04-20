@@ -11,10 +11,20 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: EmptyState(),
-        ),
+      home: Home(),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Color(0xffefefef),
+      body: Center(
+        child: EmptyState(),
       ),
     );
   }
@@ -24,14 +34,14 @@ class EmptyState extends StatelessWidget {
   final String text;
   final IconData icon;
   final Color iconColor;
-  final Color boxColor;
+  final Color glassColor;
 
   const EmptyState({
     Key? key,
     this.text = 'No tasks here yet',
     this.icon = Icons.checklist_rounded,
     this.iconColor = Colors.white,
-    this.boxColor = Colors.blue,
+    this.glassColor = Colors.blue,
   }) : super(key: key);
 
   @override
@@ -41,11 +51,11 @@ class EmptyState extends StatelessWidget {
 
     BorderRadius borderRadius = const BorderRadius.all(Radius.circular(12.0));
 
-    Widget box = Opacity(
+    Widget background = Opacity(
       opacity: opacity,
       child: Container(
         decoration: BoxDecoration(
-          color: boxColor,
+          color: glassColor,
           borderRadius: borderRadius,
         ),
       ),
@@ -71,7 +81,7 @@ class EmptyState extends StatelessWidget {
               bottom: offset * -1,
               top: offset,
               right: offset,
-              child: box,
+              child: background,
             ),
             Positioned.fill(
               child: ClipRect(
@@ -80,7 +90,7 @@ class EmptyState extends StatelessWidget {
                     sigmaX: 5,
                     sigmaY: 5,
                   ),
-                  child: box,
+                  child: background,
                 ),
               ),
             ),

@@ -10,12 +10,21 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        backgroundColor: Color(0xffefefef),
-        body: Align(
-          alignment: Alignment.bottomCenter,
-          child: TextInput(),
-        ),
+      home: Home(),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Color(0xffefefef),
+      body: Align(
+        alignment: Alignment.bottomCenter,
+        child: TextInput(),
       ),
     );
   }
@@ -79,11 +88,12 @@ class _TextInputState extends State<TextInput> {
                   if (text.isNotEmpty) {
                     print(text);
                     _controller.clear();
-                  } // consider whether or not to retain focus
+                  }
                 },
                 decoration: const InputDecoration(
                   icon: Icon(
                     Icons.check_box_outline_blank_rounded,
+                    color: Colors.black45,
                     size: 24.0,
                   ),
                   hintText: 'Create task',
