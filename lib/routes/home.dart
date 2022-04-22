@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rho/widgets/empty_state.dart';
 import 'package:rho/widgets/text_input.dart';
+import 'package:rho/widgets/task_list.dart';
+import 'package:rho/helpers/task.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<String> _tasks = [];
+  final List<Task> _tasks = [];
 
   late TextEditingController _controller;
   late FocusNode _focusNode;
@@ -47,14 +49,13 @@ class _HomeState extends State<Home> {
               ? const EmptyState(
                   text: 'No tasks here yet',
                 )
-              : ListView(
-                  children: _tasks
-                      .map(
-                        (task) => ListTile(
-                          title: Text(task),
-                        ),
-                      )
-                      .toList(),
+              : TaskList(
+                  tasks: _tasks,
+                  handleDelete: (int index) {
+                    setState(() {
+                      _tasks.removeAt(index);
+                    });
+                  },
                 ),
         ),
       ),
@@ -105,7 +106,11 @@ class _HomeState extends State<Home> {
                       focusNode: _focusNode,
                       onSubmit: (String text) {
                         setState(() {
-                          _tasks.add(text);
+                          _tasks.add(
+                            Task(
+                              title: text,
+                            ),
+                          );
                         });
 
                         _controller.clear();
