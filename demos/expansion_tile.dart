@@ -120,15 +120,25 @@ class _TileState extends State<Tile> {
             )
           : ExpansionTile(
               childrenPadding: const EdgeInsets.only(left: 16.0),
-              leading: const Icon(
-                Icons.crop_square_outlined,
-                color: Colors.black38,
+              leading: GestureDetector(
+                onTap: () {
+                  print('Check task');
+                },
+                child: const Icon(
+                  Icons.crop_square_outlined,
+                  color: Colors.black38,
+                ),
               ),
-              title: Text(
-                widget.task,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black87,
+              title: GestureDetector(
+                onTap: () {
+                  print('Edit Task');
+                },
+                child: Text(
+                  widget.task,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black87,
+                  ),
                 ),
               ),
               trailing: Row(
