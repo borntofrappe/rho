@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rho/routes/home.dart';
 
 void main() {
   runApp(const App());
@@ -9,12 +10,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('rho'),
-        ),
+    return MaterialApp(
+      theme: ThemeData(
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Colors.amber,
+              background: Colors.white,
+            ),
       ),
+      home: const Home(),
     );
   }
 }
