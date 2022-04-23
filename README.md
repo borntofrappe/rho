@@ -4,9 +4,25 @@ A good looking task-taking app.
 
 ---
 
-Focus on essential features — CRUD operations — as well as persisting data — hive, bloc, or again sqlite — and intuitive design — animations, decorations.
+## figma
+
+The `figma` sub-folder describes the idea of the final output, both in design and features.
+
+In the current version the idea is to support CRUD-like operations:
+
+- create
+
+- edit
+
+- mark as complete — checked
+
+- mark as incomplete
+
+- delete
 
 ## demos
+
+The `demos` sub-folder provides a few helper demos to develop parts of the application.
 
 ### empty_state
 
