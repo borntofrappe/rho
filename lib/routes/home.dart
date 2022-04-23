@@ -43,20 +43,34 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Center(
-          child: _tasks.isEmpty
-              ? const EmptyState(
-                  text: 'No tasks here yet',
-                )
-              : TaskList(
-                  tasks: _tasks,
-                  handleDelete: (int index) {
-                    setState(() {
-                      _tasks.removeAt(index);
-                    });
-                  },
-                ),
+        child: Column(
+          children: [
+            ListTile(
+              trailing: Image.asset('assets/icon.png'),
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: _tasks.isEmpty
+                    ? const EmptyState(
+                        text: 'No tasks here yet',
+                      )
+                    : TaskList(
+                        tasks: _tasks,
+                        handleDelete: (int index) {
+                          setState(() {
+                            _tasks.removeAt(index);
+                          });
+                        },
+                      ),
+              ),
+            ),
+            const Expanded(
+              child: ExcludeSemantics(),
+            )
+          ],
         ),
       ),
       floatingActionButton: _hasFocus
