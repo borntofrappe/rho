@@ -104,3 +104,19 @@ As an alternative to [_expansion_tile_](#expansiontile) use `ExpansionPanel` to 
 Advantage: ability to expand/hide the content by pressing only the handle at the end of the section.
 
 Disadvantages: strict widget structure — you are forced to include instances of `ExpansionPanel` in an `ExpansionPanelList` widget. Default styling — it is difficult to change the visual in terms of color, spacing, obligatory handles. Inability to effectively display tasks without subtasks.
+
+### lists
+
+> design the lists and list items shown in the home screen
+
+The application shows tasks in two lists, depending on whether or not the individual task as been marked as completed.
+
+In the first list use `ListView.separated` and a list of `ListTile` widgets.
+
+In the second list, however, wrap the same construct in an `ExpansionTile` widget. The goal is to show a string of text with the number of completed tasks and collapse/expand the associated list.
+
+A few specificities for the second list:
+
+- make the list stateful to rotate the custom icon as the tile is collapsed/expanded
+
+- add an empty `trailing` field to replace the default visual, the arrow icon provided by flutter
