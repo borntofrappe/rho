@@ -120,3 +120,7 @@ A few specificities for the second list:
 - make the list stateful to rotate the custom icon as the tile is collapsed/expanded
 
 - add an empty `trailing` field to replace the default visual, the arrow icon provided by flutter
+
+### sliver_lists
+
+> refactor ListView widgets to use slivers and a custom scroll view
