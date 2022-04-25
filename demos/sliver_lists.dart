@@ -42,14 +42,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     Task(title: 'watch tennis final', completed: true),
   ];
 
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 250),
-    vsync: this,
-  );
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.easeIn,
-  );
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
 
   void _toggleExpanded() {
     setState(() {
@@ -64,8 +58,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    );
+
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
+
     super.dispose();
   }
 

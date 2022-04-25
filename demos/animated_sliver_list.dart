@@ -34,7 +34,8 @@ class _HomeState extends State<Home> {
   int _count = 0;
   final List<Task> _tasks = [];
 
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final GlobalKey<SliverAnimatedListState> _listKey =
+      GlobalKey<SliverAnimatedListState>();
 
   void _addTask() {
     _tasks.insert(
@@ -90,9 +91,13 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Expanded(
-                  child: CustomList(
-                    tasks: _tasks,
-                    listKey: _listKey,
+                  child: CustomScrollView(
+                    slivers: [
+                      CustomSliverList(
+                        tasks: _tasks,
+                        listKey: _listKey,
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -104,11 +109,11 @@ class _HomeState extends State<Home> {
   }
 }
 
-class CustomList extends StatelessWidget {
+class CustomSliverList extends StatelessWidget {
   final List<Task> tasks;
-  final GlobalKey<AnimatedListState> listKey;
+  final GlobalKey<SliverAnimatedListState> listKey;
 
-  const CustomList({
+  const CustomSliverList({
     Key? key,
     required this.tasks,
     required this.listKey,
@@ -116,7 +121,7 @@ class CustomList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedList(
+    return SliverAnimatedList(
       key: listKey,
       initialItemCount: tasks.length,
       itemBuilder:
