@@ -46,10 +46,10 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double offset = 16.0;
-    double opacity = 0.3;
+    double offset = 14.0;
+    double opacity = 0.25;
 
-    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(12.0));
+    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(14.0));
 
     Widget background = Opacity(
       opacity: opacity,
@@ -62,10 +62,10 @@ class EmptyState extends StatelessWidget {
     );
 
     Widget foreground = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 28.0),
+      padding: const EdgeInsets.all(24.0),
       child: Icon(
         icon,
-        size: 42.0,
+        size: 38.0,
         color: iconColor,
       ),
     );

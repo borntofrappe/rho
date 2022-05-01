@@ -34,15 +34,17 @@ Use `BackdropFilter` to blur the background of the topmost box and create a glas
 
 The widget receives optional arguments to customize the text, the icon and the color of the boxes and icons.
 
+It is necessary to import the `dart:ui` library to use `ImageFilter.blur`.
+
 ### text_input
 
 > design the widget tree for the input area
 
-Add a `Form` widget to receive user input. Use `TextFormField` with a dedicated controller and focus node.
+Add a `Form` widget to receive user input.
+
+Use `TextFormField` with a dedicated controller and focus node.
 
 The controller works to extract and manage the text in the field. The focus node helps to remove focus as the text is submitted.
-
-_Please note:_ it is not necessary to remove focus on the `onFieldSubmitted` field.
 
 ### dialog_input
 
@@ -50,7 +52,7 @@ _Please note:_ it is not necessary to remove focus on the `onFieldSubmitted` fie
 
 Manage the text input with a mixed state strategy:
 
-- in the parent home widget consider the controller and focus node, so that it is ultimately possible to extract the text and manage the focus around the widget, not to mention the visibility of the fab component
+- in the parent home widget consider the controller and focus node, so that it is ultimately possible to extract the text and manage the focus around the widget, not to mention the visibility of the floating action button:
 
 - in the child widget update a boolean flag to highlight whether the text field is empty or not
 
@@ -64,6 +66,6 @@ Lists make up the core of the application.
 
 `sliver_lists` and `animated_sliver:list` refactor the code to use sliver widget instead of `ListView`.
 
-Beyond the four demos `reorderable_list` allow to sort items in a `ReorderableList` widget.
+`expansion_tile` shows how to display a task and optionally the connected subtasks. When there are no substasks use a single `ListTile` widget. When there are subtasks use `ExpansionTile` and include the subtasks in the collapse-able `children` field.
 
-`expansion_tile` and `expansion_panel` show how to display a task and optionally the connected subtasks.
+Note that in `lists` the demo makes use of an `ExpansionTile` widget to optionally show the contents of the second list. The structure is not repeated in `sliver_list` as I prefer to restructure the widget tree to have a limited number of widgets wrapped in `SliverToBoxAdapter`.

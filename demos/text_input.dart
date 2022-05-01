@@ -48,6 +48,7 @@ class _TextInputState extends State<TextInput> {
 
     _controller = TextEditingController();
     _focusNode = FocusNode();
+
     _controller.addListener(() {
       setState(() {
         _isEmpty = _controller.text.isEmpty;
@@ -84,6 +85,7 @@ class _TextInputState extends State<TextInput> {
               TextFormField(
                 controller: _controller,
                 focusNode: _focusNode,
+                textCapitalization: TextCapitalization.sentences,
                 onFieldSubmitted: (String text) {
                   if (text.isNotEmpty) {
                     print(text);
@@ -108,9 +110,13 @@ class _TextInputState extends State<TextInput> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   TextButton(
-                    child: const Text('Done',
-                        style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold)),
+                    child: const Text(
+                      'Done',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     onPressed: _isEmpty
                         ? null
                         : () {
