@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class Task {
   String title;
-  List<String> subtasks;
+  List<Task> subtasks;
+  bool completed;
 
   Task({
     required this.title,
     this.subtasks = const [],
+    this.completed = false,
   });
 }
 
@@ -34,19 +36,28 @@ class Home extends StatelessWidget {
       Task(
         title: 'Research',
         subtasks: [
-          'ExpansionTile',
-          'AnimatedRotation',
+          Task(
+            title: 'ExpansionTile',
+            completed: true,
+          ),
+          Task(
+            title: 'AnimatedRotation',
+          ),
         ],
       ),
-      Task(
-        title: 'Dawdle',
-      ),
+      Task(title: 'Dawdle', completed: true),
       Task(
         title: 'git',
         subtasks: [
-          'add',
-          'push',
-          'commit',
+          Task(
+            title: 'add',
+          ),
+          Task(
+            title: 'push',
+          ),
+          Task(
+            title: 'commit',
+          ),
         ],
       ),
     ];
@@ -93,6 +104,15 @@ class TaskItem extends StatelessWidget {
       ),
       child: task.subtasks.isEmpty
           ? TaskTile(
+              leading: task.completed
+                  ? Icon(
+                      Icons.check_box_rounded,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : const Icon(
+                      Icons.check_box_outline_blank_rounded,
+                      color: Colors.black38,
+                    ),
               title: Text(
                 task.title,
                 style: const TextStyle(
@@ -106,8 +126,17 @@ class TaskItem extends StatelessWidget {
               children: task.subtasks
                   .map(
                     (subtask) => TaskTile(
+                      leading: subtask.completed
+                          ? Icon(
+                              Icons.check_box_rounded,
+                              color: Theme.of(context).primaryColor,
+                            )
+                          : const Icon(
+                              Icons.check_box_outline_blank_rounded,
+                              color: Colors.black38,
+                            ),
                       title: Text(
-                        subtask,
+                        subtask.title,
                         style: const TextStyle(
                           color: Colors.black54,
                         ),
@@ -122,9 +151,12 @@ class TaskItem extends StatelessWidget {
 
 class TaskTile extends StatelessWidget {
   final Widget title;
+  final Widget leading;
+
   const TaskTile({
     Key? key,
     required this.title,
+    required this.leading,
   }) : super(key: key);
 
   @override
@@ -132,12 +164,9 @@ class TaskTile extends StatelessWidget {
     return ListTile(
       leading: GestureDetector(
         onTap: () {
-          print('Check task');
+          print('Toggle task');
         },
-        child: const Icon(
-          Icons.crop_square_outlined,
-          color: Colors.black38,
-        ),
+        child: leading,
       ),
       title: GestureDetector(
           onTap: () {
@@ -152,6 +181,7 @@ class TaskExpansionTile extends StatefulWidget {
   final String title;
   final List<Widget> children;
   final bool expanded;
+
   const TaskExpansionTile({
     Key? key,
     required this.title,
