@@ -10,15 +10,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.grey[100],
-        colorScheme: Theme.of(context).colorScheme.copyWith(
-              primary: Colors.amber,
-              background: Colors.white,
-            ),
-      ),
-      home: const Home(),
+    return const MaterialApp(
+      home: Home(),
     );
   }
 }
