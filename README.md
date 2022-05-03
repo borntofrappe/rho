@@ -69,3 +69,9 @@ Lists make up the core of the application.
 `expansion_tile` shows how to display a task and optionally the connected subtasks. When there are no substasks use a single `ListTile` widget. When there are subtasks use `ExpansionTile` and include the subtasks in the collapse-able `children` field.
 
 Note that in `lists` the demo makes use of an `ExpansionTile` widget to optionally show the contents of the second list. The structure is not repeated in `sliver_list` as I prefer to restructure the widget tree to have a limited number of widgets wrapped in `SliverToBoxAdapter`.
+
+## app
+
+In increments:
+
+- incorporate the empty state widget. For the color use `iconColor` and `glassColor`, but make the values optional, falling back to the color scheme set on the context. Update the color scheme with a `ThemeData` widget
