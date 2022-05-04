@@ -6,10 +6,21 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: EmptyState(
-          text: 'No tasks here yet',
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              trailing: Image.asset('assets/icon.png'),
+            ),
+            const Expanded(
+              child: Center(
+                child: EmptyState(
+                  text: 'No tasks here yet',
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

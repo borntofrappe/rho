@@ -75,3 +75,9 @@ Note that in `lists` the demo makes use of an `ExpansionTile` widget to optional
 In increments:
 
 - incorporate the empty state widget. For the color use `iconColor` and `glassColor`, but make the values optional, falling back to the color scheme set on the context. Update the color scheme with a `ThemeData` widget
+
+- in the home route add a column with a list tile, the empty state and eventually a list with the tasks
+
+- in the list tile add the icon designed for the app. Remember to add the static file in `pubspec.yaml`
+
+- make the status bar transparent, at least on android devices, with the `services` module
