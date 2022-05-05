@@ -89,3 +89,5 @@ In increments:
 - in the text input manage the state to know whether or not the text field is empty
 
 - use `resizeToAvoidBottomInset` to avoid moving the content upwards as the keyboard is propped up
+
+- use the input received from the `text_input` widget to populate a list of `Task` instances

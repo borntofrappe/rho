@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rho/widgets/empty_state.dart';
 import 'package:rho/widgets/text_input.dart';
+import 'package:rho/helpers/Task.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,9 +11,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final List<Task> _tasks = [];
+
   late TextEditingController _controller;
   late FocusNode _focusNode;
   bool _hasFocus = false;
+
+  void _addTask(String title) {
+    setState(() {
+      _tasks.insert(
+        0,
+        Task(
+          title: title,
+        ),
+      );
+    });
+  }
+
+  void _toggleTask(int index) {
+    setState(() {
+      _tasks[index].completed = !_tasks[index].completed;
+    });
+  }
 
   @override
   void initState() {
@@ -47,11 +67,30 @@ class _HomeState extends State<Home> {
               ListTile(
                 trailing: Image.asset('assets/icon.png'),
               ),
-              const Expanded(
-                child: Center(
-                  child: EmptyState(
-                    text: 'No tasks here yet',
+              if (_tasks.isEmpty)
+                const Expanded(
+                  child: Center(
+                    child: EmptyState(
+                      text: 'No tasks here yet',
+                    ),
                   ),
+                ),
+              Expanded(
+                child: ListView.separated(
+                  itemBuilder: (BuildContext context, int index) => ListTile(
+                    onTap: () => {
+                      _toggleTask(index),
+                    },
+                    leading: Icon(
+                      _tasks[index].completed
+                          ? Icons.check_box_rounded
+                          : Icons.check_box_outline_blank,
+                    ),
+                    title: Text(_tasks[index].title),
+                  ),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(height: 8.0),
+                  itemCount: _tasks.length,
                 ),
               ),
             ],
@@ -104,7 +143,7 @@ class _HomeState extends State<Home> {
                       controller: _controller,
                       focusNode: _focusNode,
                       onSubmit: (String text) {
-                        print(text);
+                        _addTask(text);
                         _controller.clear();
                         _focusNode.unfocus();
 
