@@ -81,3 +81,11 @@ In increments:
 - in the list tile add the icon designed for the app. Remember to add the static file in `pubspec.yaml`
 
 - make the status bar transparent, at least on android devices, with the `services` module
+
+- make home into a stateful widget to manage a text controller and focus node (and soon the list)
+
+- add a floating action button to prop the text input from dialog_input
+
+- in the text input manage the state to know whether or not the text field is empty
+
+- use `resizeToAvoidBottomInset` to avoid moving the content upwards as the keyboard is propped up
