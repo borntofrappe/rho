@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color(0xffefefef),
+      backgroundColor: Color(0xfffefefe),
       body: Center(
         child: EmptyState(),
       ),
@@ -31,17 +31,17 @@ class Home extends StatelessWidget {
 }
 
 class EmptyState extends StatelessWidget {
-  final String text;
+  final Text text;
   final IconData icon;
   final Color iconColor;
   final Color glassColor;
 
   const EmptyState({
     Key? key,
-    this.text = 'No tasks here yet',
+    this.text = const Text('No tasks here yet'),
     this.icon = Icons.checklist_rounded,
     this.iconColor = Colors.white,
-    this.glassColor = Colors.blue,
+    this.glassColor = Colors.amber,
   }) : super(key: key);
 
   @override
@@ -49,11 +49,13 @@ class EmptyState extends StatelessWidget {
     double offset = 14.0;
     double opacity = 0.25;
 
-    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(14.0));
+    BorderRadius borderRadius = const BorderRadius.all(
+      Radius.circular(14.0),
+    );
 
     Widget background = Opacity(
       opacity: opacity,
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: glassColor,
           borderRadius: borderRadius,
@@ -75,30 +77,33 @@ class EmptyState extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(bottom: offset),
-          child: Stack(clipBehavior: Clip.none, children: <Widget>[
-            Positioned(
-              left: offset * -1,
-              bottom: offset * -1,
-              top: offset,
-              right: offset,
-              child: background,
-            ),
-            Positioned.fill(
-              child: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: 5,
-                    sigmaY: 5,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              Positioned(
+                left: offset * -1,
+                bottom: offset * -1,
+                top: offset,
+                right: offset,
+                child: background,
+              ),
+              Positioned.fill(
+                child: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 5,
+                      sigmaY: 5,
+                    ),
+                    child: background,
                   ),
-                  child: background,
                 ),
               ),
-            ),
-            foreground
-          ]),
+              foreground,
+            ],
+          ),
         ),
         const SizedBox(height: 16.0),
-        Text(text),
+        text,
       ],
     );
   }
