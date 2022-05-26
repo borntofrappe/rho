@@ -24,6 +24,16 @@ I created the widget to receive optional arguments and customize its appearance.
 
 Note that it is necessary to import `dart:ui` library to use `ImageFilter.blur`.
 
+### general_dialog
+
+In the application the idea is to create a new task through the floating action button. Tap said button to show a text input in the bottom section of the screen, compose the task and confirm the text. With the demo I focus on the way the text input is supposed to appear, in the form of a general dialog.
+
+Use `showGeneralDialog` to generate the visual above the page. Past the required fields, `context` and `pageBuilder`, specify how the dialog appears, with a slide transition and from the bottom of the screen.
+
+In `pageBuilder` describe the appearance of the dialog with a column with two children, one to show the text-input-to-be and one to dismiss the dialog.
+
+I chose to make the widget stateful to also remove the floating action button as the dialog is propped up. Flutter automatically transitions the button when setting the `floatingActionButton` field to `null`.
+
 ## app
 
 ### empty_state
@@ -31,3 +41,7 @@ Note that it is necessary to import `dart:ui` library to use `ImageFilter.blur`.
 Instead of setting the colors for the decoration in the widget use two color values set on the context's color scheme.
 
 Set the color scheme value in the instance of `MaterialApp` so that the value cascade throughout the entire application.
+
+### general_dialog
+
+Outside of using the colors set through the theme widget set `resizeToAvoidBottomInset` to `false` so that the widgets included in the `body` of the scaffold widget do not translate as the keyboard appears.

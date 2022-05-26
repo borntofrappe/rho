@@ -1,5 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:rho/widgets/empty_state.dart';
+
+void main() {
+  runApp(const App());
+}
+
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: Home(),
+    );
+  }
+}
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,21 +28,16 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: const Center(
-        child: EmptyState(),
-      ),
-      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color(0xfffefefe),
       floatingActionButton: _isDialogShown
           ? null
           : FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: Colors.amber,
               child: const Icon(Icons.add),
               onPressed: () {
                 setState(() {
                   _isDialogShown = true;
                 });
-
                 showGeneralDialog(
                   context: context,
                   transitionBuilder: (BuildContext context,
@@ -74,8 +83,7 @@ class _HomeState extends State<Home> {
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
                                   style: TextButton.styleFrom(
-                                    primary:
-                                        Theme.of(context).colorScheme.primary,
+                                    primary: Colors.amber,
                                   ),
                                   child: const Text('Done'),
                                   onPressed: () {
