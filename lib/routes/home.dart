@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rho/widgets/empty_state.dart';
+import 'package:rho/widgets/text_input.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,7 +10,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool _isDialogShown = false;
+  late TextEditingController _controller;
+  late FocusNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = TextEditingController();
+    _focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +37,15 @@ class _HomeState extends State<Home> {
         child: EmptyState(),
       ),
       resizeToAvoidBottomInset: false,
-      floatingActionButton: _isDialogShown
+      floatingActionButton: _focusNode.hasFocus
           ? null
           : FloatingActionButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: const Icon(Icons.add),
               onPressed: () {
-                setState(() {
-                  _isDialogShown = true;
-                });
-
                 showGeneralDialog(
+                  barrierDismissible: true,
+                  barrierLabel: 'Go back to tasks',
                   context: context,
                   transitionBuilder: (BuildContext context,
                       Animation<double> animation,
@@ -57,41 +73,16 @@ class _HomeState extends State<Home> {
                           topRight: Radius.circular(24.0),
                         ),
                       ),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxWidth: 420.0,
-                        ),
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 6.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              const Text('Here\'d find the text input'),
-                              const SizedBox(height: 8.0),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  style: TextButton.styleFrom(
-                                    primary:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                                  child: const Text('Done'),
-                                  onPressed: () {
-                                    setState(
-                                      () {
-                                        _isDialogShown = false;
-                                      },
-                                    );
+                      child: TextInput(
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        onSubmit: (String text) {
+                          print(text);
+                          _controller.clear();
+                          _focusNode.unfocus();
 
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                          Navigator.pop(context);
+                        },
                       ),
                     );
                   },

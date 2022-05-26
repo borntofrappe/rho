@@ -34,6 +34,20 @@ In `pageBuilder` describe the appearance of the dialog with a column with two ch
 
 I chose to make the widget stateful to also remove the floating action button as the dialog is propped up. Flutter automatically transitions the button when setting the `floatingActionButton` field to `null`.
 
+### text_input
+
+In the dialog the idea is to accept text input to create a task.
+
+With `TextInput` manage the state of a `TextFormField` widget with a controller and a focus node.
+
+The widget itself precedes a button to equally receive the input with a button press. Wrap both in a `Column` and `Form` widget, so clarify the purpose of the component.
+
+With the controller retrieve the string of text and clear the field.
+
+With the focus node manage remove focus as you ultimately submit the text.
+
+With a boolean variable finally control when the input field is empty, so to change the appearance of the associated button.
+
 ## app
 
 ### empty_state
@@ -45,3 +59,11 @@ Set the color scheme value in the instance of `MaterialApp` so that the value ca
 ### general_dialog
 
 Outside of using the colors set through the theme widget set `resizeToAvoidBottomInset` to `false` so that the widgets included in the `body` of the scaffold widget do not translate as the keyboard appears.
+
+### text_input
+
+In the context of the dialog generated through the floating action button it is possible to use the focus node and to condition the floating action button itself.
+
+Following this option it is also possible to make the general dialog dismissible. Note that `barrierLabel` becomes necessary to allow the dismissible feature.
+
+It would be possible to make `TextInput` a stateless widget, since you ultimately manage the associated logic from `Home`. Ultimately I decided to maintain the stateful nature so that the widget manages the logic associated with the button, updating `_isEmpty` in the `onChanged` field. The controller and focus node are themselves lifted up to the parent widget.
