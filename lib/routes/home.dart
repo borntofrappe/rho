@@ -27,7 +27,9 @@ class _HomeState extends State<Home> {
     _controller = TextEditingController();
     _focusNode = FocusNode();
 
-    _expanded = widget.expanded;
+    setState(() {
+      _expanded = widget.expanded;
+    });
   }
 
   @override
@@ -42,7 +44,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     List<Task> tasks = <Task>[
       Task(title: 'Research AnimatedSliverList'),
-      Task(title: 'Implement SliverList'),
+      Task(title: 'Implement SliverList', completed: true),
       Task(title: 'Design task item', completed: true),
       Task(title: 'Complete sliver list workshop', completed: true),
     ];
@@ -51,46 +53,61 @@ class _HomeState extends State<Home> {
         tasks.where((Task task) => task.completed).toList();
 
     return Scaffold(
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Tasks(
-                    tasks:
-                        tasks.where((Task task) => !task.completed).toList()),
-                const SizedBox(height: 16.0),
-                ExpansionTile(
-                  initiallyExpanded: _expanded,
-                  onExpansionChanged: (bool expanded) {
-                    setState(() {
-                      _expanded = expanded;
-                    });
-                  },
-                  leading: AnimatedRotation(
-                    duration: const Duration(milliseconds: 200),
-                    turns: _expanded ? 0.5 : 0.0,
-                    child: const Icon(
-                      Icons.keyboard_arrow_up_rounded,
-                      color: Colors.black45,
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 420),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CustomScrollView(
+                slivers: [
+                  Tasks(
+                    tasks: tasks.where((Task task) => !task.completed).toList(),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    sliver: SliverToBoxAdapter(
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                        ),
+                        child: ListTile(
+                          minLeadingWidth: 0.0,
+                          onTap: () {
+                            setState(() {
+                              _expanded = !_expanded;
+                            });
+                          },
+                          leading: AnimatedRotation(
+                            duration: const Duration(milliseconds: 200),
+                            turns: _expanded ? 0.5 : 0.0,
+                            child: const Icon(
+                              Icons.keyboard_arrow_up_rounded,
+                              color: Colors.black45,
+                            ),
+                          ),
+                          title: Text(
+                            'Completed ${completedTasks.length} tasks',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black45,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  title: Text(
-                    'Completed ${completedTasks.length} tasks',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black45,
-                      fontSize: 16.0,
+                  SliverVisibility(
+                    visible: _expanded,
+                    sliver: Tasks(
+                      tasks: completedTasks,
                     ),
-                  ),
-                  trailing: const ExcludeSemantics(),
-                  children: [
-                    Tasks(tasks: completedTasks),
-                  ],
-                ),
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

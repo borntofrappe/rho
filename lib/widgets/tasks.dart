@@ -12,14 +12,25 @@ class Tasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      itemCount: tasks.length,
-      itemBuilder: (BuildContext context, int index) => TaskTile(
-        task: tasks[index],
-      ),
-      separatorBuilder: (BuildContext context, int index) => const SizedBox(
-        height: 16.0,
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          if (index.isEven) {
+            return TaskTile(
+              task: tasks[index ~/ 2],
+            );
+          }
+          return const SizedBox(
+            height: 16.0,
+          );
+        },
+        childCount: (tasks.length * 2 - 1),
+        semanticIndexCallback: (Widget widget, int localIndex) {
+          if (localIndex.isEven) {
+            return localIndex ~/ 2;
+          }
+          return null;
+        },
       ),
     );
   }

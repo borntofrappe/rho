@@ -72,6 +72,18 @@ The application differentiates tasks first showing unfinished tasks and then, op
 
 To optionally show the completed variant use an `ExpansionTile` widget with a custom icon in place of the one added in the `trailing` field. Remove this default setting the field to an empty widget like `ExcludeSemantics`.
 
+### sliver_lists
+
+As prefaced in the lists demo `shrinkWrap` is potentially problematic as the application computes the size of the entire widget to allocate the necessary space. Slivers promise to fix the issue with dedicated widgets: `CustomScrollView`, `SliverList` and `SliverChildBuilderDelegate`.
+
+To add space between successive list items I follow the example provided in the accessibility section of [SliverChildBuilderDelegate](https://api.flutter.dev/flutter/widgets/SliverChildBuilderDelegate-class.html): add twice the number of items, include a `SizedBox` for every other item, update the index to provide the correct semantics.
+
+Past the sliver widgets devoted to the list the demo introduces `SliverPadding` and `SliverToBoxAdapter`, since `CustomScrollView` requires a list of slivers instead of widgets.
+
+`SliverToBoxAdapter` is used to incorporate a list tile to replace the functionality of `ExpansionTile`. Tap on the tile to toggle the visibility of the sliver list devoted to completed tasks.
+
+In the process I lost the transition built-in the expansion widget, and I could add a small effect with `SliverAnimatedOpacity`, but the functionality might become redundant considering `AnimatedSliverList`.
+
 ## app
 
 ### empty_state
