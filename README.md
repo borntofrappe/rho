@@ -48,6 +48,24 @@ With the focus node manage remove focus as you ultimately submit the text.
 
 With a boolean variable finally control when the input field is empty, so to change the appearance of the associated button.
 
+### list_tile
+
+Each task is displayed with a `ListTile` with two main sections, a leading icon and the title of the task itself.
+
+Define a `Task` class to manage the logic of each task item. At the time of writing the task has only two fields for its label and complete status.
+
+Define a hard-coded list of tasks to test out the design of the tile.
+
+In the demo I use a `ListView.separated` widget but I am in the process of researching alternative solutions considering sliver lists specifically.
+
+Most importantly for the functionality of the application the list tile needs to accommodate different gestures:
+
+- a tap on the leading icon should result in the task being marked as complete or unmark as unfinished
+
+- a tap on the tile should allow to edit the tile through the same dialog discussed in a previous demo
+
+- a long press on the tile should allow to select the tile, with the ultimate goal of deleting the piece
+
 ## app
 
 ### empty_state

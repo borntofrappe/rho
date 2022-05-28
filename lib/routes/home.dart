@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rho/widgets/empty_state.dart';
+// import 'package:rho/widgets/empty_state.dart';
 import 'package:rho/widgets/text_input.dart';
+import 'package:rho/widgets/task_tile.dart';
+import 'package:rho/helpers/task.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -31,10 +33,31 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    List<Task> tasks = <Task>[
+      Task(title: 'Research AnimatedSliverList'),
+      Task(title: 'Implement SliverList'),
+      Task(title: 'Design task item', completed: true),
+      Task(title: 'Complete sliver list workshop', completed: true),
+    ];
+
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: const Center(
-        child: EmptyState(),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView.separated(
+              itemCount: tasks.length,
+              itemBuilder: (BuildContext context, int index) => TaskTile(
+                task: tasks[index],
+              ),
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(
+                height: 16.0,
+              ),
+            ),
+          ),
+        ),
       ),
       resizeToAvoidBottomInset: false,
       floatingActionButton: _focusNode.hasFocus
