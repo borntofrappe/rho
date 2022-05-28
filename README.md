@@ -66,6 +66,12 @@ Most importantly for the functionality of the application the list tile needs to
 
 - a long press on the tile should allow to select the tile, with the ultimate goal of deleting the piece
 
+### lists
+
+The application differentiates tasks first showing unfinished tasks and then, optionally, completed ones. The demo creates a stateless widget `Tasks` which receives a list of tasks and uses `ListView.separated` to display the individual tiles. It is necessary to set `shrinkWrap` to `true` to have Flutter evaluate the size of the widgets, which might create [issues](https://api.flutter.dev/flutter/widgets/ScrollView/shrinkWrap.html) as the lists grow in size and animations.
+
+To optionally show the completed variant use an `ExpansionTile` widget with a custom icon in place of the one added in the `trailing` field. Remove this default setting the field to an empty widget like `ExcludeSemantics`.
+
 ## app
 
 ### empty_state

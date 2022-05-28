@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 // import 'package:rho/widgets/empty_state.dart';
 import 'package:rho/widgets/text_input.dart';
-import 'package:rho/widgets/task_tile.dart';
 import 'package:rho/helpers/task.dart';
+import 'package:rho/widgets/tasks.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final bool expanded;
+  const Home({
+    Key? key,
+    this.expanded = false,
+  }) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -14,6 +18,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late TextEditingController _controller;
   late FocusNode _focusNode;
+  bool _expanded = false;
 
   @override
   void initState() {
@@ -21,6 +26,8 @@ class _HomeState extends State<Home> {
 
     _controller = TextEditingController();
     _focusNode = FocusNode();
+
+    _expanded = widget.expanded;
   }
 
   @override
@@ -40,21 +47,50 @@ class _HomeState extends State<Home> {
       Task(title: 'Complete sliver list workshop', completed: true),
     ];
 
+    List<Task> completedTasks =
+        tasks.where((Task task) => task.completed).toList();
+
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: ListView.separated(
-              itemCount: tasks.length,
-              itemBuilder: (BuildContext context, int index) => TaskTile(
-                task: tasks[index],
-              ),
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(
-                height: 16.0,
-              ),
+            child: Column(
+              children: [
+                Tasks(
+                    tasks:
+                        tasks.where((Task task) => !task.completed).toList()),
+                const SizedBox(height: 16.0),
+                ExpansionTile(
+                  initiallyExpanded: _expanded,
+                  onExpansionChanged: (bool expanded) {
+                    setState(() {
+                      _expanded = expanded;
+                    });
+                  },
+                  leading: AnimatedRotation(
+                    duration: const Duration(milliseconds: 200),
+                    turns: _expanded ? 0.5 : 0.0,
+                    child: const Icon(
+                      Icons.keyboard_arrow_up_rounded,
+                      color: Colors.black45,
+                    ),
+                  ),
+                  title: Text(
+                    'Completed ${completedTasks.length} tasks',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black45,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                  trailing: const ExcludeSemantics(),
+                  children: [
+                    Tasks(tasks: completedTasks),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
