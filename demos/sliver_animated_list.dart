@@ -43,6 +43,8 @@ class _HomeState extends State<Home> {
   final GlobalKey<SliverAnimatedListState> _listKey =
       GlobalKey<SliverAnimatedListState>();
 
+  bool _visible = false;
+
   int _counter = 0;
 
   void _addTask() {
@@ -53,6 +55,10 @@ class _HomeState extends State<Home> {
       Task(title: 'Task # ${_counter.toString()}'),
     );
     _listKey.currentState?.insertItem(0);
+
+    setState(() {
+      _visible = _tasks.isNotEmpty;
+    });
   }
 
   @override
@@ -66,9 +72,13 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.all(16.0),
             child: CustomScrollView(
               slivers: [
-                Tasks(
-                  tasks: _tasks,
-                  listKey: _listKey,
+                SliverAnimatedOpacity(
+                  opacity: _visible ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 250),
+                  sliver: Tasks(
+                    tasks: _tasks,
+                    listKey: _listKey,
+                  ),
                 ),
               ],
             ),
@@ -103,15 +113,13 @@ class Tasks extends StatelessWidget {
       itemBuilder:
           (BuildContext context, int index, Animation<double> animation) {
         return SizeTransition(
+          axisAlignment: -1.0,
           sizeFactor: animation,
-          child: FadeTransition(
-            opacity: animation,
-            child: Container(
-              margin: EdgeInsets.only(
-                  bottom: index < tasks.length - 1 ? 16.0 : 0.0),
-              child: TaskTile(
-                task: tasks[index],
-              ),
+          child: Container(
+            margin:
+                EdgeInsets.only(bottom: index < tasks.length - 1 ? 16.0 : 0.0),
+            child: TaskTile(
+              task: tasks[index],
             ),
           ),
         );

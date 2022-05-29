@@ -4,34 +4,33 @@ import 'package:rho/helpers/task.dart';
 
 class Tasks extends StatelessWidget {
   final List<Task> tasks;
+  final GlobalKey<SliverAnimatedListState> listKey;
 
   const Tasks({
     Key? key,
     required this.tasks,
+    required this.listKey,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          if (index.isEven) {
-            return TaskTile(
-              task: tasks[index ~/ 2],
-            );
-          }
-          return const SizedBox(
-            height: 16.0,
-          );
-        },
-        childCount: (tasks.length * 2 - 1),
-        semanticIndexCallback: (Widget widget, int localIndex) {
-          if (localIndex.isEven) {
-            return localIndex ~/ 2;
-          }
-          return null;
-        },
-      ),
+    return SliverAnimatedList(
+      key: listKey,
+      itemBuilder:
+          (BuildContext context, int index, Animation<double> animation) {
+        return SizeTransition(
+          axisAlignment: -1.0,
+          sizeFactor: animation,
+          child: Container(
+            margin:
+                EdgeInsets.only(bottom: index < tasks.length - 1 ? 16.0 : 0.0),
+            child: TaskTile(
+              task: tasks[index],
+            ),
+          ),
+        );
+      },
+      initialItemCount: tasks.length,
     );
   }
 }

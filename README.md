@@ -84,6 +84,18 @@ Past the sliver widgets devoted to the list the demo introduces `SliverPadding` 
 
 In the process I lost the transition built-in the expansion widget, and I could add a small effect with `SliverAnimatedOpacity`, but the functionality might become redundant considering `AnimatedSliverList`.
 
+### sliver_animated_list
+
+Since there are two lists it is reasonable to create two separate collections, but the demo focuses on one list only, and the animation connected to a task being added to the home screen. I intend to implement an animation in which a new task appears with a fade-in transition, at the top of the list. Any subsequent task in the list should move vertically to make space for the new item.
+
+Here's how I managed to implement the effect:
+
+- use a `SizeTransition` in a `SliverAnimatedList` sliver. This step completes most of the animation, but does create a small annoying effect for the first item, which grows in size and does not fade in
+
+- fade in the entire list with `SliverAnimatedOpacity`
+
+Flutter offers [SliverFadeTransition](https://api.flutter.dev/flutter/widgets/SliverFadeTransition-class.html) with a more hands-on, imperative transition which could also help to achieve the fade-in effect, perhaps delaying the transition just a bit for the first item to be grown in size and avoid the growth of the clipped area. For items past the first one the effect is less evident as all the list adjusts to make space for the new task.
+
 ## app
 
 ### empty_state
@@ -103,3 +115,7 @@ In the context of the dialog generated through the floating action button it is 
 Following this option it is also possible to make the general dialog dismissible. Note that `barrierLabel` becomes necessary to allow the dismissible feature.
 
 It would be possible to make `TextInput` a stateless widget, since you ultimately manage the associated logic from `Home`. Ultimately I decided to maintain the stateful nature so that the widget manages the logic associated with the button, updating `_isEmpty` in the `onChanged` field. The controller and focus node are themselves lifted up to the parent widget.
+
+### sliver_animated_list
+
+Use the empty state of the `_tasks` list to animate the opacity of the sliver list, but also the movement from the decorative widget `EmptyState`.
