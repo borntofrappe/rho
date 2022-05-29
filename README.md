@@ -96,6 +96,10 @@ Here's how I managed to implement the effect:
 
 Flutter offers [SliverFadeTransition](https://api.flutter.dev/flutter/widgets/SliverFadeTransition-class.html) with a more hands-on, imperative transition which could also help to achieve the fade-in effect, perhaps delaying the transition just a bit for the first item to be grown in size and avoid the growth of the clipped area. For items past the first one the effect is less evident as all the list adjusts to make space for the new task.
 
+### sliver_animated_lists
+
+As a list item is tapped, specifically on the leading icon, remove the task from the first list and add it to the second.
+
 ## app
 
 ### empty_state
